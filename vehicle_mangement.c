@@ -2,85 +2,96 @@
 #include<stdlib.h>
 #include<string.h>
 
-struct car{
-    char carname[100];
-    struct car *next1;
-    struct car *prev1;
+struct record{
+    char name[100];
+    char c_name[100];
+    char service[100];
+    struct record *ptr;
+    struct record *next;
+    char carn[100];
+    int phone;
 };
-
-char temp2[100];
-struct car*head2=NULL;
-struct car*current_node1=NULL;
-
-struct owner{
-    char ownname[100];
-    struct owner *next;
-    struct owner *prev;
-};
-
+char name[100];
+char c_name[100];
+char service[100];
+char carn[100];
+int phone;
 char temp[100];
-struct owner*head=NULL;
-struct owner*current_node=NULL;
+struct record*head=NULL;
+int num=0;
+//struct owner*current_node=NULL;
 
 
+void input(){
+ printf("\n\n");
 
-void owner_name(){
-    printf("Enter Owner Name: ");
-    while((getchar())!='\n');
-    scanf("%[^\n]%*c",temp);
+    while ((getchar()) != '\n');
 
-    struct owner* own_node=(struct owner*)malloc(sizeof(struct owner));
-    strcpy(own_node->ownname,temp);
-    if(head == NULL){
-        own_node->next = own_node->prev=own_node;
-        head=current_node=own_node;
-        return;
+        printf("\n");
+        printf("Enter Owner's Name\n");
+        scanf("%[^\n]%*c", name);
+        printf("Enter Car's Name\n");
+        scanf("%[^\n]%*c", c_name);
+        printf("Enter the Service\n");
+        scanf("%[^\n]%*c", service);
+        printf("Enter Car Number = \n");
+        scanf("%[^\n]%*c", carn);
+        printf("Enter phone number\n");
+        scanf("%d",&phone);
+        printf("\n");
+        Insert(name,c_name,service,carn,phone);
     }
-    struct owner*last =head->prev;
-    own_node->prev=last;
-    last->next=own_node;
-    own_node->next=head;
-    head->prev=own_node;
-}
-void car_name(){
-    printf("Enter Car Name: \n");
-    while((getchar())!='\n');
-    scanf("%[\n]%*c",temp2);
 
-    struct car* car_node=(struct car*)malloc(sizeof(struct car));
-    strcpy(car_node->carname,temp2);
-    if(head2 == NULL){
-        car_node->next1 = car_node->prev1=car_node;
-        head2=current_node1=car_node;
-        return;
+
+void Insert(char name[],char c_name[],char service[],char carn[],int phone)
+{
+    struct record *ptr = (struct record*)malloc(sizeof(struct record));
+    struct record *temp;
+    strcpy(ptr->name,name);
+    strcpy(ptr->c_name,c_name);
+    strcpy(ptr->service,service);
+    strcpy(ptr->carn,carn);
+    ptr->phone = phone;
+
+
+    if(head == NULL)
+    {
+        ptr -> next = NULL;
+        head = ptr;
     }
-    struct car*last1 =head2->prev1;
-    car_node->prev1=last1;
-    last1->next1=car_node;
-    car_node->next1=head2;
-    head2->prev1=car_node;
-}
+    else
+    {
+        temp = head;
+        while (temp -> next != NULL)
+        {
+            temp = temp -> next;
+        }
+        temp->next = ptr;
+        ptr->next = NULL;
 
+    }
+    num = num + 1;
+}
 
 void display(){
-    if(head2==NULL){
+    if(head==NULL){
         printf("No car visited\n");
         return;
     }
-        struct owner*show=head;
-        struct car*show1=head2;
+        struct record*show=head;
+
         printf("\n");
         int i=1;
         printf("Displaying Serviced Vehicles: \n");
+         printf("|\tSr.no\tOwner\t|\tName\t|\tService\t|\tCar_Number\t|\tMobile No\t\n");
         do{
-            printf("Sr.no\tOwner\t|\tName\t|\tService\t\n");
-            printf("%d\t%s\t%s\t\n",i,show->ownname,show1->carname);
+
+            printf("|\t%d\t%s\t%s\t%s\t%s\t%d\n",i,show->name,show->c_name,show->service,show->carn,show->phone);
             printf("\n");
-            printf("%s\n",show1->carname);
+
             i++;
             show=show->next;
-            show1=show1->next1;
-        }while(show!=head);
+        }while(show!=NULL);
 
 }
 
@@ -101,8 +112,7 @@ int ch;
 
    if(ch ==1)
    {
-       owner_name();
-       car_name();
+        input();
 
 
    }else if(ch ==2){
