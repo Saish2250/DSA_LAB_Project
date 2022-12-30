@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#include<vehicle_management.h>
+//#include<vehicle_management.h>
 
 struct record{
     char name[100];
@@ -41,7 +41,7 @@ void input(){
         scanf("%d",&phone);
         printf("\n");
         Insert(name,c_name,service,carn,phone);
-    }
+}
 
 
 void Insert(char name[],char c_name[],char service[],char carn[],int phone)
@@ -85,8 +85,10 @@ void update(){
       while ((getchar()) != '\n');
      printf("Enter Owner Name to Update a record\n");
      scanf("%[^\n]%*c", own);
+     printf("Press Enter to continue\n");
      struct record*check=head;
-     while(strcmp(check->name,own)==0){
+    do{
+    if(strcmp(check->name,own)==0){
         char c[100];
         char o[100];
         char s[100];
@@ -110,8 +112,12 @@ void update(){
         strcpy(check->service,s);
         strcpy(check->carn,cn);
         check->phone = ph;
-        break;
+        printf("Record updated successfully\n");
+        return;
      }
+     check=check->next;
+    }while(check!=NULL);
+    printf("No data avilable");
 }
 void display(){
     if(head==NULL){
@@ -132,10 +138,11 @@ void display(){
             i++;
             show=show->next;
         }while(show!=NULL);
-        printf("No record with entered input\n");
-        printf("\n\n\n")
+
+        printf("\n\n\n");
 }
-void removal(){
+
+/**void removal(){
 if(head==NULL){
     printf("No vehicle data available");
     return;
@@ -163,7 +170,7 @@ if(head==NULL){
      }
      while(ptr!=head);
      printf("No music found");
-}
+}**/
 
 
 int main(){
