@@ -6,7 +6,7 @@
 int main(){
 int ch;
 
-
+    printf("------------------Welcome to Vehicle Service Management------------------------------------");
     do{
     printf("\n\n1.Insert records\n");
     printf("2.Display records\n");

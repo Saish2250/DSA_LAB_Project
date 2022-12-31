@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#include "vehicle_management.h"
+//#include "vehicle_management.h"
 
 struct record{
     int c;
@@ -13,7 +13,7 @@ struct record{
     char carn[100];
     char vtype[100];
     int phone;
-
+    int price;
 };
 char name[100];
 char c_name[100];
@@ -25,33 +25,78 @@ char vtype[100];
 struct record*head;
 int num=0;
 int c;
+int price;
 //struct owner*current_node=NULL;
+
 
 
 void input(){
  printf("\n\n");
+    int ch;
 
     while ((getchar()) != '\n');
         c++;
         printf("\n");
         printf("Enter Owner's Name\n");
         scanf("%[^\n]%*c", name);
-        printf("Enter vehicle type\n");
-        scanf("%[^\n]%*c", vtype);
+        printf("\n");
+        printf("Choose vehicle type\n");
+        //scanf("%[^\n]%*c", vtype);
+        printf("1. Car\n");
+        printf("2. Bike\n");
+        scanf("%d",&ch);
+        if(ch==1){
+            strcpy(vtype, "Car");
+        }else if(ch==2){
+            strcpy(vtype, "Bike");
+        }else{
+            strcpy(vtype, "Car");
+        }
+        while ((getchar()) != '\n');
+        printf("\n");
         printf("Enter Vehicle's Name\n");
         scanf("%[^\n]%*c", c_name);
-        printf("Enter the Service\n");
-        scanf("%[^\n]%*c", service);
+        printf("\n");
         printf("Enter Vehicle Number\n");
         scanf("%[^\n]%*c", carn);
+        printf("\n");
+        //scanf("%[^\n]%*c", service);
+        printf("1. Spray\n");
+        printf("2. Wash\n");
+        printf("3. Repair\n");
+        printf("Choose Vehicle Service\n");
+        scanf("%d",&ch);
+        if(ch==1){
+            strcpy(service, "Spray");
+        }else if(ch==2){
+            strcpy(service, "Wash");
+        }else if(ch==3){
+            strcpy(service, "Repair");
+        }
+        else{
+            strcpy(service, "Repair");
+        }
+        printf("\n");
         printf("Enter phone number\n");
         scanf("%d",&phone);
         printf("\n");
-        Insert(c,name,vtype,c_name,service,carn,phone);
+        if(strcmp(vtype,"Car")==0 && strcmp(service,"Spray")==0){
+            price=1000;
+        }else if(strcmp(vtype,"Car")==0 && strcmp(service,"Wash")==0){
+            price=700;
+        }else if(strcmp(vtype,"Bike")==0 && strcmp(service,"Wash")==0){
+            price=600;
+        }else if(strcmp(vtype,"Bike")==0 && strcmp(service,"Spray")==0){
+            price=500;
+        }else{
+            printf("Enter price for repair\n");
+            scanf("%d",&price);
+        }
+        Insert(c,name,vtype,c_name,service,carn,phone,price);
 }
 
 
-void Insert(int c,char name[],char vtype[],char c_name[],char service[],char carn[],int phone)
+void Insert(int c,char name[],char vtype[],char c_name[],char service[],char carn[],int phone,int price)
 {
     struct record *ptr = (struct record*)malloc(sizeof(struct record));
     struct record *temp;
@@ -62,7 +107,7 @@ void Insert(int c,char name[],char vtype[],char c_name[],char service[],char car
     strcpy(ptr->service,service);
     strcpy(ptr->carn,carn);
     ptr->phone = phone;
-
+    ptr->price = price;
 
     if(head == NULL)
     {
@@ -91,6 +136,7 @@ void update(){
     }
     struct record *ptr1 = (struct record*)malloc(sizeof(struct record));
      char vn[30];
+     int ch,ch1;
       while ((getchar()) != '\n');
      printf("Enter Vehicle Number to Update a record\n");
      scanf("%[^\n]%*c", vn);
@@ -104,28 +150,75 @@ void update(){
         char s[100];
         char cn[100];
         int ph;
+        int p;
         while ((getchar()) != '\n');
 
         printf("\n");
         printf("Enter Owner's Name\n");
         scanf("%[^\n]%*c", o);
-        printf("Enter Vehicle's Type\n");
-        scanf("%[^\n]%*c", v);
+         printf("\n");
         printf("Enter Car's Name\n");
         scanf("%[^\n]%*c", c);
-        printf("Enter the Service\n");
-        scanf("%[^\n]%*c", s);
-        printf("Enter Car Number = \n");
+        printf("\n");
+        printf("Enter Vehicle's Type\n");
+        //scanf("%[^\n]%*c", v);
+        printf("\n");
+        printf("1. Car\n");
+        printf("2. Bike\n");
+        scanf("%d",&ch1);
+        if(ch1==1){
+            strcpy(v, "Car");
+        }else if(ch1==2){
+            strcpy(v, "Bike");
+        }else{
+            strcpy(v, "Car");
+        }
+        while ((getchar()) != '\n');
+        printf("\n");
+        printf("Enter Vehicle Number\n");
         scanf("%[^\n]%*c", cn);
+        printf("\n");
+        printf("Choose a Service\n");
+        //scanf("%[^\n]%*c", s);
+         printf("1. Spray\n");
+         printf("2. Wash\n");
+         printf("3. Repair\n");
+        scanf("%d",&ch);
+        if(ch==1){
+            strcpy(s, "Spray");
+        }else if(ch==2){
+            strcpy(s, "Wash");
+        }else if(ch==3){
+            strcpy(s, "Repair");
+        }
+        else{
+            strcpy(s, "Repair");
+        }
+        printf("\n");
         printf("Enter phone number\n");
         scanf("%d",&ph);
+        if(strcmp(v,"Car")==0 && strcmp(s,"Spray")==0){
+            p=1000;
+        }else if(strcmp(v,"Car")==0 && strcmp(s,"Wash")==0){
+            p=700;
+        }else if(strcmp(v,"Bike")==0 && strcmp(s,"Wash")==0){
+            p=600;
+        }else if(strcmp(v,"Bike")==0 && strcmp(s,"Spray")==0){
+            p=500;
+        }else{
+            printf("Enter price for repair\n");
+            scanf("%d",&p);
+        }
         strcpy(check->name,o);
         strcpy(check->vtype,v);
         strcpy(check->c_name,c);
         strcpy(check->service,s);
         strcpy(check->carn,cn);
         check->phone = ph;
+        check->price = p;
+         printf("\n");
         printf("Record updated successfully\n");
+        printf("\n");
         return;
      }
      check=check->next;
@@ -144,10 +237,10 @@ void display(){
         printf("\n");
 
         printf("Displaying Serviced Vehicles: \n");
-         printf("|\tSr.no\tOwner\t|\tVehicle Type\t|\tName\t|\tService\t|\tCar_Number\t|\tMobile No\t\n");
+         printf("| Sr.no |\tOwner    |    Vehicle Type   |\tName\t|\tService\t|\tVehicle Number\t|\tMobile No\t|\tPrice\t|\n");
         do{
 
-            printf("|\t%d\t%s\t%s\t%s\t%s\t%s\t%d\n",show->c,show->name,show->vtype,show->c_name,show->service,show->carn,show->phone);
+         printf("|  %d   |\t%s       |    %s             |\t%s\t|\t%s\t|\t%s\t|\t%d\t|\t%d\t|\n",show->c,show->name,show->vtype,show->c_name,show->service,show->carn,show->phone,show->price);
             printf("\n");
 
             show=show->next;
@@ -155,6 +248,7 @@ void display(){
 
         printf("\n\n\n");
 }
+
 
 void delin(){
     int c1;
