@@ -1,6 +1,8 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+// Vehicle Service Management System using linkedlist
+
 struct record{
     int c;
     char name[100];
@@ -25,75 +27,10 @@ struct record*head;
 int num=0;
 int c;
 int price;
-//struct owner*current_node=NULL;
 
 
-void input(){
- printf("\n\n");
-    int ch;
 
-    while ((getchar()) != '\n');
-        c++;
-        printf("\n");
-        printf("Enter Owner's Name\n");
-        scanf("%[^\n]%*c", name);
-        printf("\n");
-        printf("Choose vehicle type\n");
-        //scanf("%[^\n]%*c", vtype);
-        printf("1. Car\n");
-        printf("2. Bike\n");
-        scanf("%d",&ch);
-        if(ch==1){
-            strcpy(vtype, "Car");
-        }else if(ch==2){
-            strcpy(vtype, "Bike");
-        }else{
-            strcpy(vtype, "Car");
-        }
-        while ((getchar()) != '\n');
-        printf("\n");
-        printf("Enter Vehicle's Name\n");
-        scanf("%[^\n]%*c", c_name);
-        printf("\n");
-        printf("Enter Vehicle Number\n");
-        scanf("%[^\n]%*c", carn);
-        printf("\n");
-        //scanf("%[^\n]%*c", service);
-        printf("1. Spray\n");
-        printf("2. Wash\n");
-        printf("3. Repair\n");
-        printf("Choose Vehicle Service\n");
-        scanf("%d",&ch);
-        if(ch==1){
-            strcpy(service, "Spray");
-        }else if(ch==2){
-            strcpy(service, "Wash");
-        }else if(ch==3){
-            strcpy(service, "Repair");
-        }
-        else{
-                service[100]="Repair";
-        }
-        printf("\n");
-        printf("Enter phone number\n");
-        scanf("%d",&phone);
-        printf("\n");
-        if(strcmp(vtype,"Car")==0 && strcmp(service,"Spray")==0){
-            price=1000;
-        }else if(strcmp(vtype,"Car")==0 && strcmp(service,"Wash")==0){
-            price=700;
-        }else if(strcmp(vtype,"Bike")==0 && strcmp(service,"Wash")==0){
-            price=600;
-        }else if(strcmp(vtype,"Bike")==0 && strcmp(service,"Spray")==0){
-            price=500;
-        }else{
-            printf("Enter price for repair\n");
-            scanf("%d",&price);
-        }
-        Insert(c,name,vtype,c_name,service,carn,phone,price);
-}
-
-
+//Insert function inserts the records of the customer into the system
 void Insert(int c,char name[],char vtype[],char c_name[],char service[],char carn[],int phone,int price)
 {
     struct record *ptr = (struct record*)malloc(sizeof(struct record));
@@ -125,6 +62,9 @@ void Insert(int c,char name[],char vtype[],char c_name[],char service[],char car
     }
     num = num + 1;
 }
+
+
+//Update function allows the updation of records which are already stored
 void update(){
     if(head==NULL){
         printf("No data added");
@@ -157,8 +97,7 @@ void update(){
         printf("Enter Car's Name\n");
         scanf("%[^\n]%*c", c);
         printf("\n");
-        printf("Enter Vehicle's Type\n");
-        //scanf("%[^\n]%*c", v);
+        printf("Choose Vehicle's Type\n");
         printf("\n");
         printf("1. Car\n");
         printf("2. Bike\n");
@@ -176,7 +115,6 @@ void update(){
         scanf("%[^\n]%*c", cn);
         printf("\n");
         printf("Choose a Service\n");
-        //scanf("%[^\n]%*c", s);
          printf("1. Spray\n");
          printf("2. Wash\n");
          printf("3. Repair\n");
@@ -224,18 +162,21 @@ void update(){
     printf("\n\n\n");
 }
 
-
+//display function displays the records which are stored
 void display(){
     if(head==NULL){
         printf("No car visited\n");
         return;
     }
+
         struct record*show=head;
 
         printf("\n");
 
+
         printf("Displaying Serviced Vehicles: \n");
          printf("| Sr.no |\tOwner    |    Vehicle Type   |\tName\t|\tService\t|\tVehicle Number\t|\tMobile No\t|\tPrice\t|\n");
+
         do{
 
          printf("|  %d   |\t%s       |    %s             |\t%s\t|\t%s\t|\t%s\t|\t%d\t|\t%d\t|\n",show->c,show->name,show->vtype,show->c_name,show->service,show->carn,show->phone,show->price);
@@ -244,16 +185,45 @@ void display(){
             show=show->next;
         }while(show!=NULL);
 
+
         printf("\n\n\n");
 }
 
 
-void delin(){
-    int c1;
-    printf("Enter serial no to delete\n");
-    scanf("%d",&c1);
-    removal(&head,c1);
+
+void printtofile(){
+    if(head==NULL){
+        printf("No car visited\n");
+        return;
+    }
+    FILE *fptr1;
+        struct record*show=head;
+
+        printf("\n");
+
+        if(fptr1==NULL){
+            printf("Error\n");
+
+        }
+        fptr1=(fopen("./data.txt","a"));
+
+         fprintf(fptr1,"Displaying Serviced Vehicles: \n");
+         fprintf(fptr1,"| Sr.no |\tOwner    |    Vehicle Type   |\tName\t|\tService\t|\tVehicle Number\t|\tMobile No\t|\tPrice\t|\n");
+        do{
+
+         fprintf(fptr1,"|  %d   |\t%s       |    %s             |\t%s\t|\t%s\t|\t%s\t|\t%d\t|\t%d\t|\n",show->c,show->name,show->vtype,show->c_name,show->service,show->carn,show->phone,show->price);
+            fprintf(fptr1,"\n");
+
+            show=show->next;
+        }while(show!=NULL);
+        fclose(fptr1);
+        printf("\n\n\n");
+        printf("Output successfully written");
 }
+
+
+
+//Removal function is used to records which are already stored using delin() function
 void removal(struct record **head, int value) {
   struct record *curr = *head;
   struct record *prev = NULL;
@@ -264,7 +234,7 @@ void removal(struct record **head, int value) {
     curr = curr->next;
   }
 
-  // If the node was not found, do nothing
+  
   if (curr == NULL)
     {
       printf("No record available with give input");
@@ -272,14 +242,14 @@ void removal(struct record **head, int value) {
       return;
     }
 
-  // Adjust the pointers to skip over the node to be deleted
+  
   if (prev == NULL) {
     *head = curr->next;
   } else {
     prev->next = curr->next;
   }
 
-  // Free the memory allocated for the node
+
   free(curr);
   printf("Record successfully deleted\n");
   printf("\n\n\n");

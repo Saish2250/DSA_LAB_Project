@@ -1,8 +1,8 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-//#include "vehicle_management.h"
 
+// Vehicle Service Management System
 struct record{
     int c;
     char name[100];
@@ -23,10 +23,9 @@ int phone;
 char temp[100];
 char vtype[100];
 struct record*head;
-int num=0;
 int c;
 int price;
-//struct owner*current_node=NULL;
+
 
 
 
@@ -232,6 +231,7 @@ void display(){
         printf("No car visited\n");
         return;
     }
+        FILE *fp;
         struct record*show=head;
 
         printf("\n");
