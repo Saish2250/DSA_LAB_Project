@@ -51,7 +51,7 @@ void input(){
             strcpy(service, "Repair");
         }
         printf("\n");
-        printf("Enter phone number\n");
+        printf("Enter phone number (10 digit)\n");
         scanf("%d",&phone);
         printf("\n");
         if(strcmp(vtype,"Car")==0 && strcmp(service,"Spray")==0){
@@ -76,17 +76,18 @@ void delin(){
     scanf("%d",&c1);
     removal(&head,c1);
 }
-
+// main function
 int main(){
 int ch;
 
     printf("------------------Welcome to Vehicle Service Management------------------------------------");
     do{
-    printf("\n\n1.Insert records\n");
+    printf("\n\n1.Insert record\n");
     printf("2.Display records\n");
-    printf("3.Delete records\n");
-    printf("4.Update records\n");
-    printf("5.Print to file\n");
+    printf("3.Delete record\n");
+    printf("4.Update record\n");
+    printf("5.Search records\n");
+    printf("6.Print records to file\n");
     printf("0. Exit\n");
     printf("What service you want to choose\n");
     printf("Enter your option\n");
@@ -104,6 +105,8 @@ int ch;
         update();
    }else if(ch==5)
    {
+        searching();
+   }else if(ch==6){
         printtofile();
    }
    else if ( ch == 0){

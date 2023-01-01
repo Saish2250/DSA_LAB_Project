@@ -175,11 +175,11 @@ void display(){
 
 
         printf("Displaying Serviced Vehicles: \n");
-         printf("| Sr.no |\tOwner    |    Vehicle Type   |\tName\t|\tService\t|\tVehicle Number\t|\tMobile No\t|\tPrice\t|\n");
+         printf("|__Sr.no__|______Owner______|__Vehicle Type__|______Name______|____Service____|__Vehicle Number__|__Mobile No__|__Price__|\n");
 
         do{
 
-         printf("|  %d   |\t%s       |    %s             |\t%s\t|\t%s\t|\t%s\t|\t%d\t|\t%d\t|\n",show->c,show->name,show->vtype,show->c_name,show->service,show->carn,show->phone,show->price);
+         printf("\n|____%d____|____%s___|_____%s________|___%s___|___%s___|_______%s_______|__%d__|__%d__|\n",show->c,show->name,show->vtype,show->c_name,show->service,show->carn,show->phone,show->price);
             printf("\n");
 
             show=show->next;
@@ -189,7 +189,38 @@ void display(){
         printf("\n\n\n");
 }
 
+//It will search records of a customer
+void searching(){
+    if(head==NULL){
+        printf("No car visited\n");
+        return;
+    }
 
+        struct record*show=head;
+
+        printf("\n");
+        char own[30];
+      while ((getchar()) != '\n');
+     printf("Enter owner name to search a record\n");
+     scanf("%[^\n]%*c", own);
+     printf("Press Enter to continue\n");
+
+        printf("Displaying Serviced Vehicles: \n");
+         printf("|__Sr.no__|______Owner______|__Vehicle Type__|______Name______|____Service____|__Vehicle Number__|__Mobile No__|__Price__|\n");
+
+        do{
+        if(strcmp(show->name,own)==0){
+         printf("\n|____%d____|____%s___|_____%s________|___%s___|___%s___|_______%s_______|__%d__|__%d__|\n",show->c,show->name,show->vtype,show->c_name,show->service,show->carn,show->phone,show->price);
+            printf("\n");
+        }
+            show=show->next;
+        }while(show!=NULL);
+
+
+        printf("\n\n\n");
+}
+
+//PRinting the data into a file
 
 void printtofile(){
     if(head==NULL){
@@ -208,10 +239,10 @@ void printtofile(){
         fptr1=(fopen("./data.txt","a"));
 
          fprintf(fptr1,"Displaying Serviced Vehicles: \n");
-         fprintf(fptr1,"| Sr.no |\tOwner    |    Vehicle Type   |\tName\t|\tService\t|\tVehicle Number\t|\tMobile No\t|\tPrice\t|\n");
+         fprintf(fptr1,"|__Sr.no__|______Owner______|__Vehicle Type__|______Name______|____Service____|__Vehicle Number__|__Mobile No__|__Price__|\n");
         do{
 
-         fprintf(fptr1,"|  %d   |\t%s       |    %s             |\t%s\t|\t%s\t|\t%s\t|\t%d\t|\t%d\t|\n",show->c,show->name,show->vtype,show->c_name,show->service,show->carn,show->phone,show->price);
+         fprintf(fptr1,"\n|____%d____|____%s___|_____%s________|___%s___|___%s___|_______%s_______|__%d__|__%d__|\n",show->c,show->name,show->vtype,show->c_name,show->service,show->carn,show->phone,show->price);
             fprintf(fptr1,"\n");
 
             show=show->next;
@@ -234,7 +265,7 @@ void removal(struct record **head, int value) {
     curr = curr->next;
   }
 
-  
+
   if (curr == NULL)
     {
       printf("No record available with give input");
@@ -242,7 +273,7 @@ void removal(struct record **head, int value) {
       return;
     }
 
-  
+
   if (prev == NULL) {
     *head = curr->next;
   } else {
